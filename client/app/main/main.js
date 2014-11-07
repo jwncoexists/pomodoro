@@ -11,13 +11,4 @@ angular.module('pomodoroApp')
             controller: 'HomeCtrl' }
         } // views
       }); // .state home
-      $stateProvider
-       .state('break', {
-        url: '/break',
-        views: {
-          "main@": {
-            templateUrl: '/app/break/break.html',
-            controller: 'BreakCtrl' }
-        } // views
-      }); // .state break
   });//.config

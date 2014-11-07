@@ -1,6 +1,17 @@
-<div id="work-container"> 
+
+<div id="work-container" ng-show="timers.curTimerObj.name == 'work'"> 
   <img src="/assets/images/work.jpg" alt=""> 
   <h1 class="main-title work">At Work</h1>
-  <button type="button" class="btn btn-success break-btn"><a ui-sref='break'>Take a Break</a></button>
+  <h1>{{ timeRemaining() | timecode }}</h1>
+  <button type="button" class="btn btn-success break-btn" ng-click="switchTimers()">Take a Break</button>
 </div>
-<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.3/moment.min.js"></script>
+
+<div id="work-container" ng-show="timers.curTimerObj.name == 'break'"> 
+  <img src="/assets/images/break.jpg" alt=""> 
+  <h1 class="main-title work">On Break</h1>
+  <h1>{{ timeRemaining() | timecode }}</h1>
+  <button type="button" class="btn btn-success break-btn" ng-click="switchTimers()">Back to Work</button>
+</div>
+
+
+
