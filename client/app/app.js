@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('blocitoffApp', [
+angular.module('pomodoroApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
