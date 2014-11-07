@@ -14,19 +14,31 @@ app.controller('BreakCtrl', ['$scope', '$http', '$interval', 'Timer', function($
 app.service('Timer', ['$rootScope', function($rootScope) {
 
   var timerService = {
-    timers: [
-      { type: "work", duration: 25, startTime: 0 },
-      { type: "break", duration: 5, startTime: 0 }
-    ],
-    start: function(timer) {
-      timer.startTime = moment();
+    timers: {
+      curTimer: "work",
+      work: { duration: 25, startTime: 0, stopTime: 0 },
+      break: { duration: 25, startTime: 0, stopTime: 0 }
+    };
+      
+    start: function(timerObj) {
+      timerObj.startTime = moment();
+      timerObj.stopTime = timerObj.startTime;
     },
-    stop: function(timer) {
-      timer.startTime = 0;
+    stop: function(timerObj) {
+      timerObj.stopTime = moment();
     },
-    switch: function() {
+    switchTimers: function() {
+      if (timers.curTimer == "work") {
+        timers.curTimer = "break";
+      }
+      else {
+        timers.curTimer = "work";
+      }
+    },
+    getCurTimerObj() {
+      return( timers[timers.curTimer] );
+    }
 
-    },
     remainingTime: function(timer) {
       return (timer.duration - (moment() - moment(timer.startTime)))/1000;
     }
