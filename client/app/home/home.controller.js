@@ -1,14 +1,12 @@
 app = angular.module('pomodoroApp');
 
-app.controller('HomeCtrl', ['$scope', '$http', '$interval', function($scope, $http, $interval) {
+app.controller('HomeCtrl', ['$scope', '$interval', function($scope, $interval) {
   console.log('In HomeCtrl');
   $scope.timers = {
     curTimerObj: null,
     workTimer: { 
       name: "work", 
       length: 1500, 
-      startTime: 0, 
-      stopTime: 0,
       duration: 0, 
       paused: false,
       soundPath: "/assets/sounds/work",
@@ -17,8 +15,6 @@ app.controller('HomeCtrl', ['$scope', '$http', '$interval', function($scope, $ht
     breakTimer: { 
       name: "break", 
       length: 300, 
-      startTime: 0, 
-      stopTime: 0,
       duration: 0,
       paused: false,
       soundPath: "/assets/sounds/break",
@@ -30,6 +26,7 @@ app.controller('HomeCtrl', ['$scope', '$http', '$interval', function($scope, $ht
       formats: ['wav'],
       preload: true
   });
+
   $scope.timers.breakTimer.sound = new buzz.sound( $scope.timers.breakTimer.soundPath, 
   {
       formats: ['wav'],
@@ -46,34 +43,28 @@ app.controller('HomeCtrl', ['$scope', '$http', '$interval', function($scope, $ht
   };
 
   $scope.startTimer = function(timerObj) {
-    if (timerObj.paused) {
-
-    }
-    else {
-      timerObj.startTime = moment();
-      timerObj.stopTime = timerObj.startTime;
+    if (!timerObj.paused) {
       timerObj.duration = timerObj.length;
     }
     timerObj.paused = false;
     $scope.timers.curTimerObj = timerObj;
-    console.log('Initializing timer to: ' + $scope.timers.curTimerObj.duration );
     $scope.startPauseText = "Pause Timer";
     $scope.launchInterval();
   };
 
   $scope.resetTimer = function(timerObj) {
-    timerObj.startTime = moment();
-    timerObj.stopTime = timerObj.startTime;
-    timerObj.duration = 0;
+    timerObj.duration = timerObj.length;
+    if (timerObj.paused) {
+      $scope.launchInterval();
+    }
     timerObj.paused = false;
     $scope.timers.curTimerObj = timerObj;
     $scope.startPauseText = "Pause Timer";
   };
 
   $scope.stopTimer = function(timerObj) {
-    timerObj.stopTime = moment();
     timerObj.duration = 0;
-    timerObj.paused = true;
+    timerObj.paused = false;
     $scope.timers.curTimerObj = null;
     $interval.cancel($scope.timerInterval);
     $scope.startPauseText = "Start Timer";
@@ -81,7 +72,6 @@ app.controller('HomeCtrl', ['$scope', '$http', '$interval', function($scope, $ht
 
   $scope.pauseTimer = function(timerObj) {
     console.log('Pausing timer');
-    timerObj.stopTime = moment();
     $interval.cancel($scope.timerInterval);
     timerObj.paused = true;
     $scope.startPauseText = "Start Timer";
@@ -121,8 +111,7 @@ app.controller('HomeCtrl', ['$scope', '$http', '$interval', function($scope, $ht
   $scope.checkCurTimer = function() {
     if ($scope.timers.curTimerObj) {
       $scope.timers.curTimerObj.duration--;
-      if ($scope.timers.curTimerObj.startTime > 0 && 
-          $scope.timers.curTimerObj.duration <= 0) {
+      if ($scope.timers.curTimerObj.duration <= 0) {
         $scope.timers.curTimerObj.sound.play();
         $scope.stopTimer($scope.timers.curTimerObj);
       }
@@ -133,7 +122,6 @@ app.controller('HomeCtrl', ['$scope', '$http', '$interval', function($scope, $ht
   var init = function() {
     $scope.switchTimers($scope.timers.workTimer);
   }
-
   init();
 
 }]); // HomeCtrl
@@ -153,7 +141,6 @@ app.filter('timecode', function() {
      var wholeSeconds = Math.floor(seconds); 
      var numMinutes = Math.floor(((wholeSeconds % 86400) % 3600) / 60);
      var numSeconds = ((wholeSeconds % 86400) % 3600) % 60;
-
      var output = "";
 
      // zero-pad minutes
@@ -161,13 +148,11 @@ app.filter('timecode', function() {
           output += '0';
      }
      output += numMinutes + ':';
- 
      // output seconds
      if (numSeconds < 10) {
        output += '0';
      }
      output += numSeconds;
-
      return output;
    }
 });

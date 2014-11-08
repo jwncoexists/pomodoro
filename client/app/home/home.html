@@ -1,6 +1,6 @@
 
 <div id="work-container" ng-show="curView == 'work'"> 
-  <img src="/assets/images/work.jpg" alt=""> 
+  <img ng-src={{timers.workTimer.imageFile}} alt=""> 
   <h1 class="main-title work">At Work</h1>
   <h1 class="timer">{{ timeRemaining() | timecode }}</h1>
   <button type="button" class="btn btn-success break-btn" ng-click="switchTimers(timers.breakTimer)">Take a Break</button>
@@ -9,7 +9,7 @@
 </div>
 
 <div id="work-container" ng-show="curView == 'break'"> 
-  <img src="/assets/images/break.jpg" alt=""> 
+  <img ng-src={{timers.breakTimer.imageFile}} alt=""> 
   <h1 class="main-title break">On Break</h1>
   <h1 class="timer">{{ timeRemaining() | timecode }}</h1>
   <button type="button" class="btn btn-success break-btn" ng-click="switchTimers(timers.workTimer)">Back to Work</button>
