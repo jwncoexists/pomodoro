@@ -1,14 +1,24 @@
 .main-title {
   text-align: center;
+  margin-top: 50px;
 }
 
 .break-btn {
   margin-top: 30px;
   color: white;
+  margin: 15px 10px 0px 10px;
+  font-size: 125%;
+  border-style: solid;
+  border-color: gray;
 }
 
 a {
   color: white
+}
+
+.timer {
+  font-size: 500%;
+  font-weight: bold;
 }
 
 #work-container {
@@ -33,7 +43,7 @@ a {
 }
 
 .break {
-  color: green;
+  color: yellow;
 }
 
 .work {
