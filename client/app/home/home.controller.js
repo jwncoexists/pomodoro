@@ -20,7 +20,8 @@ app.controller('HomeCtrl', ['$scope', '$interval', function($scope, $interval) {
       soundPath: "/assets/sounds/break",
       imageFile: "/assets/images/break.jpg" }
   };
-  
+  var self = this;
+  self.mytext = "You did it!";
   $scope.timers.workTimer.sound = new buzz.sound( $scope.timers.workTimer.soundPath, 
   {
       formats: ['wav'],
@@ -113,7 +114,7 @@ app.controller('HomeCtrl', ['$scope', '$interval', function($scope, $interval) {
       $scope.timers.curTimerObj.duration--;
       if ($scope.timers.curTimerObj.duration <= 0) {
         $scope.timers.curTimerObj.sound.play();
-        $scope.stopTimer($scope.timers.curTimerObj);
+        $scope.pauseTimer($scope.timers.curTimerObj);
       }
     } 
   }; // checkCurTimer
