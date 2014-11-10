@@ -20,14 +20,12 @@ app.controller('HomeCtrl', ['$scope', '$interval', function($scope, $interval) {
       soundPath: "/assets/sounds/break",
       imageFile: "/assets/images/break.jpg" }
   };
-  var self = this;
-  self.mytext = "You did it!";
+  $scope.testStr = "Hello world!";
   $scope.timers.workTimer.sound = new buzz.sound( $scope.timers.workTimer.soundPath, 
   {
       formats: ['wav'],
       preload: true
   });
-
   $scope.timers.breakTimer.sound = new buzz.sound( $scope.timers.breakTimer.soundPath, 
   {
       formats: ['wav'],
@@ -72,14 +70,12 @@ app.controller('HomeCtrl', ['$scope', '$interval', function($scope, $interval) {
   };
 
   $scope.pauseTimer = function(timerObj) {
-    console.log('Pausing timer');
     $interval.cancel($scope.timerInterval);
     timerObj.paused = true;
     $scope.startPauseText = "Start Timer";
   };
 
   $scope.switchTimers = function(timerObj) {
-    console.log('in Switch Timers')
     var nextTimerObj = $scope.timers.workTimer;
     if ($scope.timers.curTimerObj) {
       $scope.stopTimer($scope.timers.curTimerObj);
@@ -89,16 +85,13 @@ app.controller('HomeCtrl', ['$scope', '$interval', function($scope, $interval) {
   };
 
   $scope.startPauseTimer = function(timerObj) {
-    console.log('in Start/Pause Timer')
     // if we have a currentTimerObj, then timer is running
     if (timerObj.paused) {
       $scope.startTimer(timerObj);
-      
     }
     else {
       $scope.pauseTimer(timerObj);
     }
-
   };
 
   $scope.timeRemaining = function() {
@@ -126,6 +119,17 @@ app.controller('HomeCtrl', ['$scope', '$interval', function($scope, $interval) {
   init();
 
 }]); // HomeCtrl
+
+// ************* TESTING ONLY ***************************
+
+app.controller('TestCtrl', ['$scope', function($scope) {
+
+  $scope.testStr = "hello";
+  $scope.testfn = function() {
+    $scope.testStr = "hello world";
+  }; // testfn
+
+}]); // TestCtrl
 
 // ********************** FILTERS ************************
 
