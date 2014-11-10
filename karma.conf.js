@@ -40,7 +40,6 @@ module.exports = function(config) {
       'test/*.spec.js'
     ],
 
-
     // list of files to exclude
     exclude: [],
 

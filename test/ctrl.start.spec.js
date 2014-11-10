@@ -50,5 +50,4 @@ describe('Controller: HomeCtrl', function() {
     expect(scope.timers.curTimerObj).to.equal(scope.timers.breakTimer);
   });
 
-
 });
